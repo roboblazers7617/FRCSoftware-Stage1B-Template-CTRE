@@ -5,12 +5,11 @@
  */
 package first.robot.opmode;
 
+import first.robot.Robot;
 import org.wpilib.command3.Trigger;
 import org.wpilib.command3.button.CommandXboxController;
 import org.wpilib.opmode.PeriodicOpMode;
 import org.wpilib.opmode.Teleop;
-
-import first.robot.Robot;
 
 @Teleop
 public class MyTeleop extends PeriodicOpMode {
@@ -21,15 +20,15 @@ public class MyTeleop extends PeriodicOpMode {
   public MyTeleop(Robot robot) {
     this.robot = robot;
 
-    Trigger leftBumperTrigger = xbox.leftBumper()
-      .whileTrue(robot.intakeLauncher.intake())
-      .whileTrue(robot.feeder.intake());
-    Trigger rightBumperTrigger = xbox.rightBumper()
-      .whileTrue(robot.intakeLauncher.shoot())
-      .whileTrue(robot.feeder.feed());
-    Trigger aButtonTrigger = xbox.a()
-      .whileTrue(robot.intakeLauncher.outtake())
-      .whileTrue(robot.feeder.outtake());
+    robot.drivetrain.setDefaultCommand(
+        robot.drivetrain.arcadeDrive(() -> -xbox.getLeftY(), () -> xbox.getRightX()));
+
+    Trigger leftBumperTrigger =
+        xbox.leftBumper().whileTrue(robot.intakeLauncher.intake()).whileTrue(robot.feeder.intake());
+    Trigger rightBumperTrigger =
+        xbox.rightBumper().whileTrue(robot.intakeLauncher.shoot()).whileTrue(robot.feeder.feed());
+    Trigger aButtonTrigger =
+        xbox.a().whileTrue(robot.intakeLauncher.outtake()).whileTrue(robot.feeder.outtake());
   }
 
   @Override
