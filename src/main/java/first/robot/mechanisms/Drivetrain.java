@@ -25,7 +25,7 @@ public class Drivetrain implements Mechanism {
   private final DifferentialDrive differentialDrive =
       new DifferentialDrive(leftLeader::setThrottle, rightLeader::setThrottle);
   private final OnboardIMU imu = new OnboardIMU(MountOrientation.FLAT);
-  private final DrivetrainSim drivetrainSim = new DrivetrainSim(leftLeader, leftFollower);
+  private final DrivetrainSim drivetrainSim = new DrivetrainSim(leftLeader, rightLeader);
 
   public Drivetrain() {
     TalonFXConfiguration leftConfig = new TalonFXConfiguration(); // config template creation!
